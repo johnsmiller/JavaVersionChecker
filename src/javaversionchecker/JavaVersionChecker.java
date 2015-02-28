@@ -5,15 +5,12 @@
  */
 package javaversionchecker;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 
 /**
  *
@@ -26,15 +23,17 @@ public class JavaVersionChecker {
     private static final String WINDOWS_x86_UPDATE_PATH = "." + File.separator + "updates" + File.separator + "run-x86.bat";
     private static final String WINDOWS_x64_UPDATE_PATH = "." + File.separator + "updates" + File.separator + "run-x64.bat";
     private static final String MAC_UPDATE_PATH = "." + File.separator + "updates" + File.separator + "jre-8u31-macosx-x64.dmg";
+    private static final String UPDATE_MESSAGE_PROMPT = 
+            "Your java version is out of date and must be updated before running " + PROGRAM_NAME + "."
+            + "\nWould you like to update? "
+            + "\n(" + PROGRAM_NAME + " will launch as soon as Java is updated)";
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         Double version = Double.parseDouble(System.getProperty("java.specification.version"));
         if(version < MINIMUM_JAVA_VERSION && 
-                popup("Your java version is out of date and must be updated before running " + PROGRAM_NAME + "."
-                    + "\nWould you like to update? "
-                    + "\n(" + PROGRAM_NAME + " will launch as soon as Java is updated)", true))
+                popup(UPDATE_MESSAGE_PROMPT, true))
         {
             String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
             
@@ -116,7 +115,7 @@ public class JavaVersionChecker {
      */
     private static boolean popup(final String text, boolean yesNoQuestion)
     {
-        JOptionPane pane = new JOptionPane(text, JOptionPane.INFORMATION_MESSAGE, ((yesNoQuestion)? JOptionPane.OK_CANCEL_OPTION : JOptionPane.DEFAULT_OPTION));
+        JOptionPane pane = new JOptionPane(text, JOptionPane.QUESTION_MESSAGE, ((yesNoQuestion)? JOptionPane.OK_CANCEL_OPTION : JOptionPane.DEFAULT_OPTION));
         final JDialog diag = pane.createDialog("Message");
         diag.setVisible(true);
         
