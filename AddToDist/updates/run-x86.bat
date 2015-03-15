@@ -1,0 +1,1 @@
+%~dp0\jre-8u31-windows-i586.exe

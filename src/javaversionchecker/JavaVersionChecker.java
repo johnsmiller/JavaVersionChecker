@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author John
  */
 public class JavaVersionChecker {
-    private static final Double MINIMUM_JAVA_VERSION = 1.7;
+    private static final Double MINIMUM_JAVA_VERSION = 1.9;
     private static final String PROGRAM_NAME = "Res-Ident";
     private static final String JAR_PROGRAM_PATH = "java -jar ." + File.separator + "dist" + File.separator + "Resident_Identifier.jar";
     private static final String WINDOWS_x86_UPDATE_PATH = "." + File.separator + "updates" + File.separator + "run-x86.bat";
@@ -48,8 +48,10 @@ public class JavaVersionChecker {
             version = Double.parseDouble(System.getProperty("java.specification.version"));
         }
         
-        if(version >= MINIMUM_JAVA_VERSION)
-            System.out.println("Launch program returned: " + launchProgram(JAR_PROGRAM_PATH, false));
+        if(version >= MINIMUM_JAVA_VERSION) {
+            //System.out.println("Launch program returned: " + launchProgram(JAR_PROGRAM_PATH, false));
+            launchResIdent();
+        }
         else
             popup("Please update your java before running this program.", false);
         System.exit(0);        
@@ -71,6 +73,7 @@ public class JavaVersionChecker {
     private static void updateMac()
     {
        System.out.println("Update Mac program returned: " + launchProgram(new String[] {"/usr/bin/open", MAC_UPDATE_PATH}, true));
+       popup("Click OK when Java is finished installing", false);
     }
     
     private static void updateOther()
@@ -103,6 +106,17 @@ public class JavaVersionChecker {
             Logger.getLogger(JavaVersionChecker.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    private static void launchResIdent()
+    {
+        /*new Thread(new Runnable() {
+
+            @Override
+            public void run() {*/
+                com.sjsurha.resident_identifier.main.main(null);
+            /*}
+        }).start();*/
     }
     
     /**

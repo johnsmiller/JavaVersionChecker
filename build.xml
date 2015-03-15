@@ -70,4 +70,9 @@
     nbproject/build-impl.xml file. 
 
     -->
+	<target name="-post-clean">
+		<copy todir="./dist/updates">
+			<fileset dir="./AddToDist/updates"/>
+		</copy>
+	</target>
 </project>
